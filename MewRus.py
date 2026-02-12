@@ -44,23 +44,11 @@ class InstallerApp:
         self.install_dir = tk.StringVar(value="")
         self.status_text = tk.StringVar(value="Выберите папку с игрой Mewgenics")
         self.kotr_image: tk.PhotoImage | None = None
-        self.window_icon: tk.PhotoImage | None = None
+        self.empty_icon = tk.PhotoImage(width=1, height=1)
+        self.root.iconphoto(True, self.empty_icon)
 
-        self._apply_window_icon()
         self._build_style()
         self._build_ui()
-
-    def _apply_window_icon(self) -> None:
-        """Apply window/taskbar icon from KotR.png when available."""
-        icon = logo_path()
-        if not icon.exists():
-            return
-        try:
-            self.window_icon = tk.PhotoImage(file=icon)
-            self.root.iconphoto(True, self.window_icon)
-        except tk.TclError:
-            # Keep default icon if image can't be loaded as icon.
-            self.window_icon = None
 
     def _build_style(self) -> None:
         self.root.configure(bg="#111318")

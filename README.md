@@ -42,14 +42,14 @@ pip install pyinstaller
 2. Выполните сборку:
 
 ```bash
-pyinstaller --noconfirm --clean --windowed --onefile --name MewRus --icon "KotR.png" --add-data "payload;payload" MewRus.py
+pyinstaller --noconfirm --clean --windowed --onefile --name MewRus --icon NONE --add-data "payload;payload" MewRus.py
 ```
 
 После сборки `MewRus.exe` появится в папке `dist/`.
 
 Чтобы картинка отображалась в шапке, положите `KotR.png` рядом с `MewRus.exe`.
 
-Иконка EXE берётся из `KotR.png` (параметр `--icon`).
+EXE собирается без иконки (`--icon NONE`).
 
 ---
 

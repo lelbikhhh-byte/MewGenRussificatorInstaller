@@ -17,7 +17,7 @@ if %errorlevel% neq 0 (
 )
 
 echo [2/3] Building MewRus.exe...
-py -m PyInstaller --noconfirm --clean --windowed --onefile --name MewRus --icon "KotR.png" --add-data "payload;payload" MewRus.py
+py -m PyInstaller --noconfirm --clean --windowed --onefile --name MewRus --icon NONE --add-data "payload;payload" MewRus.py
 if %errorlevel% neq 0 (
   echo [ERROR] Build failed.
   exit /b 1
