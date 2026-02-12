@@ -75,12 +75,6 @@ class InstallerApp:
 
         ttk.Label(card, textvariable=self.status_text, style="Body.TLabel").pack(anchor="w")
 
-        info = (
-            "Совет: собирайте EXE через PyInstaller, чтобы получить MewRus.exe.\n"
-            "Команда сборки: pyinstaller --noconfirm --windowed --onefile --name MewRus "
-            "--add-data \"payload;payload\" MewRus.py"
-        )
-        ttk.Label(card, text=info, style="Body.TLabel", justify="left").pack(anchor="w", pady=(24, 0))
 
     def _choose_directory(self) -> None:
         selected = filedialog.askdirectory(title="Выберите папку с Mewgenics")
