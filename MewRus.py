@@ -118,6 +118,14 @@ class InstallerApp:
             self.install_dir.set(selected)
             self.status_text.set("Папка выбрана. Нажмите «Установить».")
 
+    def _set_progress_step(self, value: int, status: str | None = None, delay: float = 0.35) -> None:
+        """Update progress bar in discrete steps with optional status text."""
+        self.progress["value"] = value
+        if status:
+            self.status_text.set(status)
+        self.root.update_idletasks()
+        time.sleep(delay)
+
     def _install(self) -> None:
         target = Path(self.install_dir.get().strip())
         if not target.exists() or not target.is_dir():
@@ -130,16 +138,19 @@ class InstallerApp:
             return
 
         dest = target / "MewRus"
-        self.progress["value"] = 10
-        self.status_text.set("Подождите, идёт подготовка к установке…")
-        self.root.update_idletasks()
-        time.sleep(6)
+        self._set_progress_step(0, "Подготовка к установке…", delay=0.3)
+        self._set_progress_step(10, "Проверка файлов…", delay=0.3)
+        self._set_progress_step(20, "Подождите, идёт подготовка к установке…", delay=6.0)
 
         try:
+            self._set_progress_step(35, "Очистка старых файлов…")
             if dest.exists():
                 shutil.rmtree(dest)
+
+            self._set_progress_step(60, "Копирование русификатора…")
             shutil.copytree(payload, dest)
 
+            self._set_progress_step(80, "Финализация установки…")
             readme = dest / "README_INSTALL.txt"
             readme.write_text(
                 "Русификатор установлен.\n"
@@ -147,8 +158,7 @@ class InstallerApp:
                 encoding="utf-8",
             )
 
-            self.progress["value"] = 100
-            self.status_text.set("Готово! Файлы русификатора скопированы в папку игры.")
+            self._set_progress_step(100, "Готово! Файлы русификатора скопированы в папку игры.", delay=0.15)
             messagebox.showinfo("Успех", f"Установка завершена.\nПуть: {dest}")
         except Exception as exc:  # pylint: disable=broad-except
             self.progress["value"] = 0
