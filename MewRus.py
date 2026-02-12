@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import shutil
 import sys
+import time
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
@@ -52,7 +53,7 @@ class InstallerApp:
         ttk.Label(card, text="MewRus Installer", style="Title.TLabel").pack(anchor="w")
         ttk.Label(
             card,
-            text="Установка учебного русификатора для Mewgenics",
+            text="Установка русификатора для Mewgenics",
             style="Body.TLabel",
         ).pack(anchor="w", pady=(4, 20))
 
@@ -95,7 +96,9 @@ class InstallerApp:
 
         dest = target / "MewRus"
         self.progress["value"] = 10
+        self.status_text.set("Подождите, идёт подготовка к установке…")
         self.root.update_idletasks()
+        time.sleep(6)
 
         try:
             if dest.exists():
